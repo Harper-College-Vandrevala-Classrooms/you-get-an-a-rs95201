@@ -115,25 +115,38 @@ void Gradebook::enter_grade(string f_name, string l_name, string assignment, int
 {
     this->grades.push_back(Grade(f_name, l_name, assignment, grade));
 }
-void Gradebook::report() {
+void Gradebook::report() 
+{
 
-   
-    for (Student student : students) 
+cout << "Last_Name,First_Name,Student_Id";
+    for (const Assignment& assignment : assignments) 
+    {
+        cout << "," << assignment.get_assignment();
+    }
+    cout << endl;
+    for (const Student& student: students) 
     {
         cout << student.get_l_name() << "," << student.get_f_name() << "," << student.get_ID();
 
-        for (Assignment assignment : assignments) {
+        for (const Assignment& assignment : assignments) {
             bool no_grade = false;
-            for (Grade grade : grades) {
+            bool no_f_name = false;
+            bool no_l_name = false;
+            for (const Grade& grade : grades) 
+            {
                 if (grade.get_f_name() == student.get_f_name() &&
                     grade.get_l_name() == student.get_l_name() &&
-                    grade.get_assignment() == assignment.get_assignment()) {
+                    grade.get_assignment() == assignment.get_assignment()) 
+                {
                     cout << "," << grade.get_grade();
                     no_grade = true;
+                    no_f_name = true;
+                    no_l_name = true;
                     break;
                 }
             }
-            if (!no_grade) {
+            if (!no_grade || !no_f_name || !no_l_name) 
+            {
                 cout << ",none"; 
             }
         }
